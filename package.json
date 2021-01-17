@@ -1,0 +1,27 @@
+{
+  "name": "z-weixin-ts",
+  "version": "1.0.0",
+  "description": "TS defines the WeChat web js-sdk",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zlsam/z-weixin-ts.git"
+  },
+  "keywords": [
+    "weixin",
+    "wechat",
+    "z-weixin-ts"
+  ],
+  "author": "sam.zhu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zlsam/z-weixin-ts/issues"
+  },
+  "homepage": "https://github.com/zlsam/z-weixin-ts#readme",
+  "dependencies": {
+    "weixin-js-sdk": "^1.6.0"
+  }
+}
