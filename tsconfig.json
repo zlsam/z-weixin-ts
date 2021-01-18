@@ -7,5 +7,9 @@
         "baseUrl": "./",
         "typeRoots": ["types/*"],
         "noEmit": true,
-    }
+        "strict": true,
+        "outDir": "dist",
+        "esModuleInterop": true
+    },
+    "exclude": ["node_modules"]
 }

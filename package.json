@@ -2,9 +2,11 @@
   "name": "z-weixin-ts",
   "version": "1.0.0",
   "description": "TS defines the WeChat web js-sdk",
-  "main": "index.ts",
+  "main": "src/index.ts",
+  "types": "types/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
