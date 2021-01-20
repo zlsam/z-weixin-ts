@@ -258,6 +258,7 @@ declare namespace weChatSDK {
     function getLocation(params: GetLocationParams): void;
 }
 
-declare module 'weixin-js-sdk'{
-    export = weChatSDK;
+// 使用ES Module导出
+declare module 'z-weixin-ts'{
+    export default weChatSDK;
 }
