@@ -256,9 +256,100 @@ declare namespace weChatSDK {
     function openLocation(params: LocationParams): void;
     // 获取地理位置接口
     function getLocation(params: GetLocationParams): void;
+
+    /*******************************************************************************************
+     *                                      摇一摇                                              *
+     *******************************************************************************************/
+    // 如需接入摇一摇周边功能，请参考：申请开通摇一摇周边
+    // 以下摇一摇周边接口使用注意事项及更多返回结果说明，请参考：摇一摇周边获取设备信息
+
+    interface BeaconsParams {
+        ticket?: string;       // 摇周边的业务ticket, 系统自动添加在摇出来的页面链接后面,使用于startSearchBeacons接口
+        complete(...args: any[]): void;
+    }
+    // 开启查找周边ibeacon设备接口
+    // complete: 开启查找完成后的回调函数
+    function startSearchBeacons(params: BeaconsParams): void;
+    // 关闭查找周边ibeacon设备接口
+    // complete: 关闭查找完成后的回调函数
+    function stopSearchBeacons(params: BeaconsParams): void;
+    // 监听周边ibeacon设备接口
+    // complete: 回调函数，可以数组形式取得该商家注册的在周边的相关设备列表
+    function onSearchBeacons(params: BeaconsParams): void;
+
+    /*******************************************************************************************
+     *                                     界面操作                                              *
+     *******************************************************************************************/
+    // 基本类
+    /**
+     * 举报: "menuItem:exposeArticle" | 调整字体: "menuItem:setFont" | 日间模式: "menuItem:dayMode"
+     * | 夜间模式: "menuItem:nightMode" | 刷新: "menuItem:refresh" | 查看公众号（已添加）: "menuItem:profile"
+     * | 查看公众号（未添加）: "menuItem:addContact"
+     */
+    type BaseMenuItems = "menuItem:exposeArticle" | "menuItem:setFont"
+        | "menuItem:dayMode" | "menuItem:nightMode"
+        | "menuItem:refresh" | "menuItem:profile"
+        | "menuItem:addContact";
+    // 传播类
+    /**
+     * 发送给朋友: "menuItem:share:appMessage" | 分享到朋友圈: "menuItem:share:timeline"
+     * | 分享到QQ: "menuItem:share:qq" | 分享到Weibo: "menuItem:share:weiboApp"
+     * | 收藏: "menuItem:favorite" | 分享到FB: "menuItem:share:facebook" | 分享到 QQ 空间 "menuItem:share:QZone"
+     */
+    type SpreadMenuItems = "menuItem:share:appMessage" | "menuItem:share:timeline" | "menuItem:share:qq"
+        | "menuItem:share:weiboApp" | "menuItem:favorite" | "menuItem:share:facebook"
+        | "menuItem:share:QZone";
+    // 保护类
+    /**
+     * 编辑标签: "menuItem:editTag" | 删除: "menuItem:delete" | 复制链接: "menuItem:copyUrl"
+     * | 原网页: "menuItem:originPage" | 阅读模式: "menuItem:readMode" | 在QQ浏览器中打开: "menuItem:openWithQQBrowser"
+     * | 在Safari中打开: "menuItem:openWithSafari" | 邮件: "menuItem:share:email" | 一些特殊公众号: "menuItem:share:brand"
+     */
+    type GuardMenuItems = "menuItem:editTag" | "menuItem:delete" | "menuItem:copyUrl"
+        | "menuItem:originPage" | "menuItem:readMode" | "menuItem:openWithQQBrowser"
+        | "menuItem:openWithSafari" | "menuItem:share:email" | "menuItem:share:brand"
+    type MenuItems = BaseMenuItems[] & SpreadMenuItems[] & GuardMenuItems[];
+    interface MenuItemParams {
+        menuList: MenuItems
+    }
+    // 关闭当前网页窗口接口
+    function closeWindow(): void;
+    // 批量隐藏功能按钮接口
+    function hideMenuItems(params: MenuItemParams): void;
+    // 批量显示功能按钮接口
+    function showMenuItems(params: MenuItemParams): void;
+    // 隐藏所有非基础按钮接口
+    function hideAllNonBaseMenuItem(): void;
+    // 显示所有功能按钮接口
+    function showAllNonBaseMenuItem(): void;
+
+    /*******************************************************************************************
+     *                                      扫一扫                                              *
+     *******************************************************************************************/
+    type scanTypes = "qrCode" | "barCode";
+    type scanTypeArray = scanTypes[];
+    interface ScanQRParams {
+        needResult: number;         // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+        scanType: scanTypeArray;    // 可以指定扫二维码还是一维码，默认二者都有
+        success(res: {
+            resultStr: string;      // 当needResult 为 1 时，扫码返回的结果
+        }): void;
+    }
+    // 调起微信扫一扫
+    function scanQRCode(params: ScanQRParams): void;
+
+    /*******************************************************************************************
+     *                                      微信小店                                            *
+     *******************************************************************************************/
+    interface SpecificViewParams {
+        productId: string; // 商品id
+        viewType: string; // 0.默认值，普通商品详情页1.扫一扫商品详情页2.小店商品详情页
+    }
+    // 跳转微信商品页接口
+    function openProductSpecificView(params: SpecificViewParams): void;
 }
 
 // 使用ES Module导出
-declare module 'z-weixin-ts'{
+declare module 'z-weixin-ts' {
     export default weChatSDK;
 }
