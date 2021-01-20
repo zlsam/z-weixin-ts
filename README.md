@@ -4,5 +4,7 @@ TS defines the WeChat web js-sdk
 # weixin js-sdk url
 https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/JS-SDK.html#2
 
-# declear
-Temporarily increase sharing
+# 引入方式
+```
+import weChatSDK from 'z-weixin-ts'
+```
