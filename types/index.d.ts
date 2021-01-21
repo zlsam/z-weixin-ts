@@ -99,16 +99,22 @@ declare namespace weChatSDK {
 
     // 自定义“分享给朋友”及“分享到QQ”按钮的分享内容（1.4.0）
     function updateAppMessageShareData(shareParams: MostShareParams): void;
+
     // 自定义“分享到朋友圈”及“分享到QQ空间”按钮的分享内容（1.4.0）
     function updateTimelineShareData(shareParams: ShareBaseParams): void;
+
     // 获取“分享到朋友圈”按钮点击状态及自定义分享内容接口（即将废弃）
     function onMenuShareTimeline(shareParams: ShareBaseParams): void;
+
     // 获取“分享给朋友”按钮点击状态及自定义分享内容接口（即将废弃）
     function onMenuShareAppMessage(shareParams: SpecialShareParams): void;
+
     // 获取“分享到QQ”按钮点击状态及自定义分享内容接口（即将废弃）
     function onMenuShareQQ(shareParams: MostShareParams): void;
+
     // 获取“分享到腾讯微博”按钮点击状态及自定义分享内容接口
     function onMenuShareWeibo(shareParams: MostShareParams): void;
+
     // 获取“分享到QQ空间”按钮点击状态及自定义分享内容接口（即将废弃）
     function onMenuShareQZone(shareParams: MostShareParams): void;
 
@@ -170,22 +176,28 @@ declare namespace weChatSDK {
      *******************************************************************************************/
     // 开始录音接口
     function startRecord(): void;
+
     // 停止录音接口
     function stopRecord(params: CallFnParams): void;
+
     // 监听录音自动停止接口
     function onVoiceRecordEnd(params: CallFnParams): void;
+
     // 播放语音接口
     function playVoice(params: {
         localId: string; // 需要播放的音频的本地ID，由stopRecord接口获得
     }): void;
+
     // 暂停播放接口
     function pauseVoice(params: {
         localId: string; // 需要暂停的音频的本地ID，由stopRecord接口获得
     }): void;
+
     // 停止播放接口
     function stopVoice(params: {
         localId: string; // 需要停止的音频的本地ID，由stopRecord接口获得
     }): void;
+
     // 监听语音播放完毕接口
     function onVoicePlayEnd(params: CallFnParams): void;
     // 上传语音接口
@@ -201,6 +213,7 @@ declare namespace weChatSDK {
         localId: string; // 需要上传的音频的本地ID，由stopRecord接口获得
     }
     function uploadVoice(params: VoiceParams): void;
+
     // 下载语音接口
     interface DownloadVoiceParams extends BaseVoiceParams {
         serverId: string; // 需要下载的音频的服务器端ID，由uploadVoice接口获得
@@ -254,6 +267,7 @@ declare namespace weChatSDK {
     }
     // 使用微信内置地图查看位置接口
     function openLocation(params: LocationParams): void;
+
     // 获取地理位置接口
     function getLocation(params: GetLocationParams): void;
 
@@ -270,9 +284,11 @@ declare namespace weChatSDK {
     // 开启查找周边ibeacon设备接口
     // complete: 开启查找完成后的回调函数
     function startSearchBeacons(params: BeaconsParams): void;
+
     // 关闭查找周边ibeacon设备接口
     // complete: 关闭查找完成后的回调函数
     function stopSearchBeacons(params: BeaconsParams): void;
+
     // 监听周边ibeacon设备接口
     // complete: 回调函数，可以数组形式取得该商家注册的在周边的相关设备列表
     function onSearchBeacons(params: BeaconsParams): void;
@@ -314,12 +330,16 @@ declare namespace weChatSDK {
     }
     // 关闭当前网页窗口接口
     function closeWindow(): void;
+
     // 批量隐藏功能按钮接口
     function hideMenuItems(params: MenuItemParams): void;
+
     // 批量显示功能按钮接口
     function showMenuItems(params: MenuItemParams): void;
+
     // 隐藏所有非基础按钮接口
     function hideAllNonBaseMenuItem(): void;
+
     // 显示所有功能按钮接口
     function showAllNonBaseMenuItem(): void;
 
@@ -347,6 +367,85 @@ declare namespace weChatSDK {
     }
     // 跳转微信商品页接口
     function openProductSpecificView(params: SpecificViewParams): void;
+
+    // 拉取适用卡券列表并获取用户选择信息
+    interface ChooseCardParams {
+        shopId: string;     // 门店Id
+        cardType: string;   // 卡券类型
+        cardId: string;     // 卡券Id
+        timestamp: number;  // 卡券签名时间戳
+        nonceStr: string;   // 卡券签名随机串
+        signType: string;   // 签名方式，默认'SHA1'
+        cardSign: string;   // 卡券签名
+        success(res: {
+            cardList: any[];// 用户选中的卡券列表信息
+        }): void;
+    }
+    function chooseCard(params: ChooseCardParams): void;
+
+    // 批量添加卡券接口
+    type CardParams = {
+        cardId: string;
+        cardExt?: string;   // 批量添加卡券接口使用
+        code?: string;      // 查看微信卡包中的卡券接口使用
+    }
+    type CardParamsArrays = CardParams[];
+    interface AddCardParams {
+        cardList: CardParamsArrays;
+        success(res: {
+            cardList: any[]
+        }): void;
+    }
+    function addCard(params: AddCardParams): void;
+
+    // 查看微信卡包中的卡券接口
+    function openCard(params: {
+        cardList: CardParamsArrays;
+    }): void;
+
+    /*******************************************************************************************
+     *                                      微信支付                                            *
+     *******************************************************************************************/
+    // 发起一个微信支付请求
+    // 微信支付开发文档：https://pay.weixin.qq.com/wiki/doc/api/index.html
+    interface ChooseWXPayParams {
+        timestamp: number;  // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+        nonceStr: string;   // 支付签名随机串，不长于 32 位
+        package: string;    // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
+        signType: string;   // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+        paySign: string;    // 支付签名
+        success(res: {
+            err_msg: string; // 使用以上方式判断前端返回,微信团队郑重提示： res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
+        }): void;  // 支付成功后的回调函数
+    }
+    function chooseWXPay(params: ChooseWXPayParams): void;
+
+    /*******************************************************************************************
+     *                                      快速输入                                            *
+     *******************************************************************************************/
+    // 共享收货地址接口
+    /**
+     * 微信地址共享使用的数据字段包括：
+     * 收货人姓名
+     * 地区，省市区三级
+     * 详细地址
+     * 邮编
+     * 联系电话 其中，地区对应是国标三级地区码，如“广东省-广州市-天河区”，对应的邮编是是510630。
+     * 详情参考链接：http://www.stats.gov.cn/tjsj/tjbz/xzqhdm/201401/t20140116_501070.html
+     */
+    interface AddressParams {
+        userName: string; // 收货人姓名
+        postalCode: string; // 邮编
+        provinceName: string; // 国标收货地址第一级地址（省）
+        cityName: string; // 国标收货地址第二级地址（市）
+        countryName: string; // 国标收货地址第三级地址（国家）
+        detailInfo: string; // 详细收货地址信息
+        nationalCode: string; // 收货地址国家码
+        telNumber: string; // 收货人手机号码
+    }
+    function openAddress(params: {
+        success(res: AddressParams): void;
+    }): void;
 }
 
 // 使用ES Module导出
