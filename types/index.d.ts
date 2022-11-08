@@ -20,9 +20,16 @@ declare namespace weChatSDK {
         | "closeWindow" | "scanQRCode"
         | "chooseWXPay" | "openProductSpecificView"
         | "addCard" | "chooseCard" | "openCard";
+    
+    // 开放标签
+    type openTag = "wx-open-launch-weapp" | "wx-open-launch-app" 
+        | "wx-open-subscribe" | "wx-open-audio"
 
     // 1.6.0 所有JS接口
     type jsApiList = API[];
+
+    // 开放标签
+    type openTagList = openTag[];
 
     // 定义key: value参数别名
     type keyValue = { [key: string]: any };
@@ -33,7 +40,8 @@ declare namespace weChatSDK {
         timestamp: number; // 必填，生成签名的时间戳
         nonceStr: string, // 必填，生成签名的随机串
         signature: string,// 必填，签名
-        jsApiList: jsApiList // 必填，需要使用的JS接口列表
+        jsApiList: jsApiList, // 必填，需要使用的JS接口列表
+        openTagList: openTagList // 可选, 开放标签
     }
 
     // 注入配置信息
