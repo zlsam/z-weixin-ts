@@ -454,6 +454,40 @@ declare namespace weChatSDK {
     function openAddress(params: {
         success(res: AddressParams): void;
     }): void;
+
+    /*******************************************************************************************
+     *                                      微信小程序                                            *
+     *******************************************************************************************/
+    interface UrlParams {
+        url: string;
+        success?():void;
+        fail?():void;
+        complete?():void;
+    }
+    interface NavigateToParams extends UrlParams {
+        events?:Object;
+    }
+    interface NavigateBackParams {
+        delta: number;
+        success?(res:any):void;
+        fail?():void;
+        complete?():void;
+    }
+    interface PostMessageParams{
+        data: any;
+    }
+    interface GetEnvParams{
+        (res:any):void;
+    }
+    namespace miniProgram{
+        function navigateTo(params: NavigateToParams):void;
+        function navigateBack(params: NavigateBackParams):void;
+        function switchTab(params: UrlParams):void;
+        function reLaunch(params: UrlParams):void;
+        function redirectTo(params: UrlParams):void;
+        function postMessage(params: PostMessageParams):void;
+        function getEnv(params: GetEnvParams):void;
+    }
 }
 
 // 使用ES Module导出
