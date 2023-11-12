@@ -274,6 +274,7 @@ declare namespace weChatSDK {
         }| {
             errMsg: string;
         }): void;
+        cancel(res: any):void;
     }
     // 使用微信内置地图查看位置接口
     function openLocation(params: LocationParams): void;
