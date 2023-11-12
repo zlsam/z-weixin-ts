@@ -271,6 +271,8 @@ declare namespace weChatSDK {
             longitude: number;  // 经度，浮点数，范围为180 ~ -180。
             speed: number;      // 速度，以米/每秒计
             accuracy: number;   // 位置精度
+        }| {
+            errMsg: string;
         }): void;
     }
     // 使用微信内置地图查看位置接口
