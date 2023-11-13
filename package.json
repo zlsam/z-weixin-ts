@@ -1,6 +1,6 @@
 {
   "name": "z-weixin-ts",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "TS defines the WeChat web js-sdk",
   "main": "src/index.ts",
   "types": "types/index.d.ts",
